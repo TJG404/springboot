@@ -16,6 +16,15 @@ public class JdbcTemplateMemberRepository  implements  MemberRepository{
     }
 
     @Override
+    public Long login(Member member) {
+        String sql = "select count(*) from member where id = ? and pwd = ?";
+        Object[] params = new Object[]{member.getId(), member.getPwd()};
+        Long count = jdbcTemplate.queryForObject(sql,
+                Long.class, params);
+        return count;
+    }
+
+    @Override
     public int save(Member member) {
         String sql = "insert into member(id, pwd, name, phone, email, mdate) values(?, ?, ?, ?, ?, now())";
         Object [] param = {
