@@ -30,7 +30,7 @@ export function ProductDetail() {
         <div className="content">
             <div className='product-detail-top'>
                 <div className='product-detail-image-top'>
-                    <img src={`/images/${product.image}`} />
+                    <img src={product.image && `/images/${product.image}`} />
                     <ImageList  className="product-detail-image-top-list"
                                 imgList={imgList}/>
                 </div>
@@ -86,7 +86,7 @@ export function ProductDetail() {
             <div className='product-detail-tab'>
                 <ul className='tabs'>
                     { tabLabels && tabLabels.map((label, i) => 
-                        <li className={tabName === tabEventNames[i]? "active": "" }>
+                        <li className={tabName === tabEventNames[i]? "active": "" } key={i}>
                             <button type="button"
                                     onClick={()=> setTabName(tabEventNames[i])}
                                 >{label}</button>

@@ -6,7 +6,6 @@ export const getProduct = (pid) => async(dispatch) => {
     // dispatch(filterProduct(pid));
     const url = "/product/pid";
     const product  = await axiosPost(url, {"pid": pid});
-    console.log("product--->", product);
     dispatch(filterProduct({"product": product}));
 }
 
