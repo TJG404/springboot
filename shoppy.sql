@@ -49,7 +49,28 @@ insert into product(name, price, info, rate, image, imgList)
 select * from product ;  
 desc product;  
 
-select pid, name, price, info, rate, trim(image) as image, imgList from product;
+select pid, name, price, info, rate, trim(image) as image, imgList from product
+where pid = 1;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
     
     
