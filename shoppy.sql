@@ -53,6 +53,46 @@ select pid, name, price, info, rate, trim(image) as image, imgList from product
 where pid = 1;
 
 
+/**********************************************
+	상품상세정보 테이블 생성 : product_detailinfo
+**********************************************/
+show tables;
+drop table product_detailinfo;
+create table product_detailinfo (
+	did			int				auto_increment		primary key,
+    title_en	varchar(100)	not null,
+    title_ko	varchar(100)	not null,
+    pid			int				not null,
+    list		json,  -- nodeJS(JSON), springboot(String, List<>)
+    constraint fk_product_pid	foreign key(pid)
+    references product(pid)
+    on delete cascade
+    on update cascade
+);
+desc product_detailinfo;
+select * from product_detailinfo;
+
+-- mysql에서 json, csv, excel... 데이터 파일을 업로드 하는 경로
+show variables like 'secure_file_priv';
+
+-- products.json 파일의 detailinfo 정보 매핑
+insert into product_detailinfo(title_en, title_ko, pid, list)
+select 
+	jt.title_en,
+    jt.title_ko,
+    jt.pid,
+    jt.list
+from
+	json_table(
+		cast(load_file('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/products.json') 
+				AS CHAR CHARACTER SET utf8mb4 ),
+		'$[*]' COLUMNS (
+			 title_en   	VARCHAR(100)  PATH '$.detailInfo.title_en',
+			 title_ko   	VARCHAR(100)  PATH '$.detailInfo.title_ko',
+			 list   	json PATH '$.detailInfo.list',
+			 pid		int	 PATH '$.pid'
+		   )   
+    ) as jt ;
 
 
 
