@@ -2,6 +2,16 @@ import React from 'react';
 import { createProduct, filterProduct } from './productSlice.js';
 import { axiosData, groupByRows, axiosGet,  axiosPost } from '../../utils/dataFetch.js';
 
+/**
+    상품 상세 정보
+*/
+export const getDetailinfo = async(pid) => {
+    const url = "/product/detailinfo";
+    const info  = await axiosPost(url, {"pid": pid});
+    const list = JSON.parse(info.list);
+    return { ...info, list: list };
+}
+
 export const getProduct = (pid) => async(dispatch) => {
     // dispatch(filterProduct(pid));
     const url = "/product/pid";

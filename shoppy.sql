@@ -94,6 +94,19 @@ from
 		   )   
     ) as jt ;
 
+select * from product_detailinfo;
+
+-- pid: 1에 대한 상품정보와 상세정보 출력 
+select *
+from product p, product_detailinfo pd
+where p.pid = pd.pid and p.pid = 1 ;
+
+select * from product;
+desc product_detailinfo;
+
+select did, title_en, title_ko, pid, list
+	from product_detailinfo
+    where pid = 1;
 
 
 
