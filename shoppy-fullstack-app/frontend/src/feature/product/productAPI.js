@@ -1,6 +1,15 @@
 import React from 'react';
 import { createProduct, filterProduct } from './productSlice.js';
 import { axiosData, groupByRows, axiosGet,  axiosPost } from '../../utils/dataFetch.js';
+/**
+    상품 QnA
+*/
+export const getQna = async(pid) => {
+    const url = "/product/qna";
+    const qna  = await axiosPost(url, {"pid": pid});
+    return qna;
+}
+
 
 /**
     상품 상세 정보

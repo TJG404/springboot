@@ -104,9 +104,84 @@ where p.pid = pd.pid and p.pid = 1 ;
 select * from product;
 desc product_detailinfo;
 
-select did, title_en, title_ko, pid, list
+select did, title_en as titleEn, title_ko as titleKo, pid, list
 	from product_detailinfo
     where pid = 1;
+
+select * from member;
+select now() from dual;
+
+/**********************************************
+	상품 QnA 테이블 생성 : product_qna
+**********************************************/
+show tables;
+desc member;
+create table product_qna (
+	qid			int				auto_increment		primary key,
+    title		varchar(100) 	not null,
+    content		varchar(200),
+    is_complete	boolean,
+    is_lock		boolean,
+    id			varchar(50)		not null,
+    pid			int				not null,
+    cdate		datetime,
+    constraint fk_product_qna_pid	foreign key(pid)  references product(pid)
+		on delete cascade   on update cascade,
+	constraint fk_member_id	foreign key(id)  references member(id)
+		on delete cascade   on update cascade
+);
+desc product_qna;
+select * from product_qna;
+
+-- mysql에서 json, csv, excel... 데이터 파일을 업로드 하는 경로
+show variables like 'secure_file_priv';
+
+-- product_qna data insert
+insert into product_qna(title, content, is_complete, is_lock, id, pid, cdate)
+select 
+	jt.title,
+    jt.content,
+    jt.is_complete,
+    jt.is_lock,
+    jt.id,
+    jt.pid,
+    jt.cdate
+from
+	json_table(
+		cast(load_file('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/productQnA.json') 
+				AS CHAR CHARACTER SET utf8mb4 ),
+		'$[*]' COLUMNS (
+			 title   		VARCHAR(100)  	PATH '$.title',
+			 content   		VARCHAR(200)  	PATH '$.content',
+			 is_complete 	boolean 		PATH '$.isComplete',
+             is_lock 		boolean 		PATH '$.isLock',
+			 id				varchar(50)	 	PATH '$.id',
+             pid			int				path '$.pid',
+             cdate			datetime		path '$.cdate'
+		   )   
+    ) as jt ;
+
+select * from product_qna;
+select * from member;
+
+-- hong 회원이 분홍색 후드티(pid:1) 상품에 쓴 QnA 조회
+-- 회원아이디(id), 회원명(name), 가입날짜(mdate), 상품명(name), 상품가격(price), 
+-- QnA제목(title), 내용(content), 등록날짜(cdate)
+select 
+	m.id,
+    m.name,
+    m.mdate,
+    p.pid,
+    p.name,
+    p.price,
+    pq.title,
+    pq.content,
+    pq.cdate
+from member m, product p, product_qna pq
+where m.id = pq.id and p.pid = pq.pid
+	and m.id = 'hong' and p.pid = 1;
+
+
 
 
 
