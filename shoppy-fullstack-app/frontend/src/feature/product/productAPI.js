@@ -1,6 +1,17 @@
 import React from 'react';
 import { createProduct, filterProduct } from './productSlice.js';
 import { axiosData, groupByRows, axiosGet,  axiosPost } from '../../utils/dataFetch.js';
+
+/**
+    상품 Return
+*/
+export const getReturn = async() => {
+    const url = "/product/return";
+    const returnData  = await axiosGet(url);
+    console.log("return => ", returnData);
+    return returnData;
+}
+
 /**
     상품 QnA
 */

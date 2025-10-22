@@ -182,6 +182,35 @@ where m.id = pq.id and p.pid = pq.pid
 	and m.id = 'hong' and p.pid = 1;
 
 
+/*********************************************************************
+	상품 Return/Delivery 테이블 생성 : product_return
+**********************************************************************/
+show tables;
+create table product_return (
+	rid			int				auto_increment	primary key,
+    title		varchar(100)	not null,
+    description	varchar(200),	
+    list		json      
+);
+desc product_return;
+select * from product_return;
+
+-- json_table을 이용하여 데이터 추가
+insert into product_return(title, description, list)
+select 
+	jt.title,
+    jt.description,
+    jt.list
+from
+	json_table(
+		cast(load_file('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/productReturn.json') 
+				AS CHAR CHARACTER SET utf8mb4 ),
+		'$[*]' COLUMNS (
+			 title   		VARCHAR(100)  	PATH '$.title',
+			 description	VARCHAR(200)  	PATH '$.description',			
+             list			json			path '$.list'
+		   )   
+    ) as jt ;
 
 
 
