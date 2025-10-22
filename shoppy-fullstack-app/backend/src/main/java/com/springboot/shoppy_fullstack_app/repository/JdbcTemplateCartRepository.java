@@ -16,13 +16,26 @@ public class JdbcTemplateCartRepository implements CartRepository{
     }
 
     @Override
+    public int updateQty(CartItem cartItem) {
+        String sql = "";
+        if(cartItem.getType().equals("+")) {
+            sql = " update cart set qty = qty + 1 where cid =? ";
+        } else {
+            sql = " update cart set qty = qty - 1 where cid =? ";
+        }
+        return jdbcTemplate.update(sql, cartItem.getCid());
+    }
+
+    @Override
     public CartItem checkQty(CartItem cartItem) {
         String sql = """
-                SELECT cid, sum(pid=? AND size=?) AS checkQty FROM cart GROUP BY cid
-                order by checkQty desc
-                limit 1
+                SELECT cid, sum(pid=? AND size=? and id=?) AS checkQty
+                	FROM cart
+                	GROUP BY cid, id
+                	order by checkQty desc
+                	limit 1
                 """;
-        Object[] params = { cartItem.getPid(), cartItem.getSize() };
+        Object[] params = { cartItem.getPid(), cartItem.getSize(), cartItem.getId() };
         return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(CartItem.class), params);
     }
 

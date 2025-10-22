@@ -15,6 +15,11 @@ public class CartServiceImpl implements CartService{
     }
 
     @Override
+    public int updateQty(CartItem cartItem) {
+        return cartRepository.updateQty(cartItem);
+    }
+
+    @Override
     public CartItem checkQty(CartItem cartItem) {
         return cartRepository.checkQty(cartItem);
     }
