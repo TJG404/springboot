@@ -245,25 +245,14 @@ select * from cart;
 delete from cart where cid in (1,2);
 select * from cart;
 
--- pid:1, size:xs 인 상품 조회
-select count(*) checkQty, cid
-from cart
-where pid = 1 and size = 'm'
-group by cid;
-
-
-select count(*) checkQty
-from cart
-where pid = 1 and size = 'xs'
-;
-
-
+-- pid, size를 이용하여 상품의 존재 check 
+-- checkQty = 1 인 경우 cid(⭕) 유효 데이터
+-- checkQty = 0 인 경우 cid(❌) 무효 데이터
 SELECT cid, sum(pid=1 AND size='xs') AS checkQty FROM cart GROUP BY cid
 order by checkQty desc
 limit 1;
 
 select * from cart;
-
 
 
 
