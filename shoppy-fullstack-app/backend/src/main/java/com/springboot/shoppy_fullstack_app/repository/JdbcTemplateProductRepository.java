@@ -22,8 +22,8 @@ public class JdbcTemplateProductRepository  implements ProductRepository{
 
     @Override
     public ProductReturn findReturn() {
-        
-        return null;
+        String sql = "select rid, title, description, list from product_return";
+        return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(ProductReturn.class));
     }
 
     @Override

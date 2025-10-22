@@ -8,8 +8,8 @@ import { axiosData, groupByRows, axiosGet,  axiosPost } from '../../utils/dataFe
 export const getReturn = async() => {
     const url = "/product/return";
     const returnData  = await axiosGet(url);
-    console.log("return => ", returnData);
-    return returnData;
+    const list = JSON.parse(returnData.list);
+    return {...returnData, list: list};
 }
 
 /**

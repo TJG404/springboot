@@ -212,10 +212,28 @@ from
 		   )   
     ) as jt ;
 
+desc product_return;
+select rid, title, description, list from product_return;
 
+/*********************************************************************
+	장바구니 테이블 생성 : cart
+**********************************************************************/
+-- cid, pid, id, size, qty, cdate
+create table cart(
+	cid			int 	auto_increment		primary key,
+    size		char(2)	not null,
+    qty			int		not null,
+    pid			int		not null,
+    id			varchar(50)	not null,
+    cdate		datetime 	not null,
+    constraint fk_cart_pid	foreign key(pid) references product(pid) 
+	on delete cascade		on update cascade,
+	constraint fk_cart_id	foreign key(id) references member(id) 
+	on delete cascade		on update cascade        
+);
 
-
-
+show tables;
+desc cart;
 
 
 
