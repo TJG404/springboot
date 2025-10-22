@@ -31,14 +31,18 @@ export const checkQty = async(pid, size, id) => {
     //쇼핑백 추가한 상품과 사이즈가 DB 테이블에 있는지 유무 확인
     const url = "/cart/checkQty";
     const data = {"pid": pid, "size": size, "id": id};
+console.log(data);
     const jsonData = await axiosPost(url, data);
+console.log("jsonData --> ", jsonData);
     return jsonData;
 }
 
 export const addCart = (pid, size) => async (dispatch) => {
+console.log("111111111");
     const { userId } = JSON.parse(localStorage.getItem("loginInfo"));
+console.log("userId ---> ", userId);
     const checkResult = await checkQty(pid, size, userId);
-
+console.log("checkResult ==> ", checkResult);
     if(!checkResult.checkQty) {
         const url = "/cart/add";
         const item = {"pid":pid, "size":size, "qty":1, "id": userId};

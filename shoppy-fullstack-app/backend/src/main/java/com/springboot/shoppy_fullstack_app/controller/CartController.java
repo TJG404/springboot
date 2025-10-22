@@ -22,6 +22,7 @@ public class CartController {
 
     @PostMapping("/checkQty")
     public CartItem checkQty(@RequestBody CartItem cartItem) {
+        System.out.println("checkQty" + cartItem.getPid() + cartItem.getSize() + cartItem.getId());
         return cartService.checkQty(cartItem);
     }
 

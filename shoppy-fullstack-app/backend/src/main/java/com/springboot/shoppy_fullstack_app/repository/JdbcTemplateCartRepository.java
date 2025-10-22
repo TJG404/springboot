@@ -28,15 +28,29 @@ public class JdbcTemplateCartRepository implements CartRepository{
 
     @Override
     public CartItem checkQty(CartItem cartItem) {
+        System.out.println("CartRepository :: " + cartItem.getPid() + cartItem.getSize() + cartItem.getId());
         String sql = """
-                SELECT cid, sum(pid=? AND size=? and id=?) AS checkQty
-                	FROM cart
-                	GROUP BY cid, id
-                	order by checkQty desc
-                	limit 1
+                SELECT
+                   ifnull(MAX(cid), 0) AS cid,
+                   COUNT(*) AS checkQty
+                 FROM cart
+                 WHERE pid = ? AND size = ? AND id = ?
                 """;
-        Object[] params = { cartItem.getPid(), cartItem.getSize(), cartItem.getId() };
-        return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(CartItem.class), params);
+        System.out.println(sql);
+
+//                SELECT cid, sum(pid=? AND size=? and id=?) AS checkQty
+//                	FROM cart
+//                	GROUP BY cid, id
+//                	order by checkQty desc
+//                	limit 1
+
+        Object[] params = {
+                cartItem.getPid(), cartItem.getSize(), cartItem.getId()
+        };
+        CartItem resultCartItem = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(CartItem.class), params);
+
+        System.out.println("resultCartItem = " + resultCartItem);
+        return resultCartItem;
     }
 
     @Override

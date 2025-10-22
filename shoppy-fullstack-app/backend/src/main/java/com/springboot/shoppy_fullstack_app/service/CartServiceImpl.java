@@ -21,6 +21,7 @@ public class CartServiceImpl implements CartService{
 
     @Override
     public CartItem checkQty(CartItem cartItem) {
+        System.out.println("CartServiceImple :: " + cartItem.getPid() + cartItem.getSize() + cartItem.getId());
         return cartRepository.checkQty(cartItem);
     }
 
