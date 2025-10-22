@@ -235,10 +235,34 @@ create table cart(
 show tables;
 desc cart;
 
+select now() from dual;
+select * from cart;
+
+-- mysql은 수정, 삭제 시 update mode를 변경
+SET SQL_SAFE_UPDATES = 0;
+
+select * from cart;
+delete from cart where cid in (1,2);
+select * from cart;
+
+-- pid:1, size:xs 인 상품 조회
+select count(*) checkQty, cid
+from cart
+where pid = 1 and size = 'm'
+group by cid;
 
 
+select count(*) checkQty
+from cart
+where pid = 1 and size = 'xs'
+;
 
 
+SELECT cid, sum(pid=1 AND size='xs') AS checkQty FROM cart GROUP BY cid
+order by checkQty desc
+limit 1;
+
+select * from cart;
 
 
 
