@@ -2,7 +2,7 @@ import React from 'react';
 import { addCartItem, updateCartCount, 
          showCartItem, updateTotalPrice,
          updateCartItem, removeCartItem } from './cartSlice.js';
-import { axiosData } from '../../utils/dataFetch.js';
+import { axiosData, axiosPost } from '../../utils/dataFetch.js';
 
 export const removeCart = (cid) => async(dispatch) => {
     dispatch(removeCartItem({"cid": cid}));
@@ -24,7 +24,14 @@ export const showCart = () => async (dispatch) => {
 }
 
 export const addCart = (pid, size) => async (dispatch) => {
-    dispatch(addCartItem({"cartItem":{"pid":pid, "size":size, "qty":1}})); 
-    dispatch(updateCartCount());
+    const url = "/cart/add";
+    const { userId } = JSON.parse(localStorage.getItem("loginInfo"));
+    const item = {"pid":pid, "size":size, "qty":1, "id": userId};
+    const rows = await axiosPost(url, item);
+    console.log("rows-->", rows);
+    return rows;
+
+//    dispatch(addCartItem({"cartItem":{"pid":pid, "size":size, "qty":1}}));
+//    dispatch(updateCartCount());
 }
 
