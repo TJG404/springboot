@@ -15,6 +15,11 @@ public class CartController {
         this.cartService = cartService;
     }
 
+    @PostMapping("/count")
+    public CartItem count(@RequestBody CartItem cartItem) {
+        return cartService.getCount(cartItem);
+    }
+
     @PostMapping("/updateQty")
     public int  updateQty(@RequestBody CartItem cartItem) {
         return cartService.updateQty(cartItem);

@@ -301,3 +301,19 @@ SELECT
     WHERE pid = 1 AND size = 'xs' AND id = 'test';
 
 select * from cart;
+select * from member;
+
+-- 장바구니 상품갯수 조회
+select count(qty) from cart where id = 'test';
+select ifnull(sum(qty), 0) as sumQty from cart where id = 'hong';  
+
+-- 장바구니 리스트 조회 : 상품(product) + 장바구니(cart) + 회원(member) 
+-- 어떤 회원이 어떤 상품을 몇개 넣었는가???
+
+
+
+
+
+
+
+

@@ -16,6 +16,12 @@ public class JdbcTemplateCartRepository implements CartRepository{
     }
 
     @Override
+    public CartItem getCount(CartItem cartItem) {
+        String sql = "select ifnull(sum(qty), 0) as sumQty from cart where id = ?";
+        return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(CartItem.class), cartItem.getId());
+    }
+
+    @Override
     public int updateQty(CartItem cartItem) {
         String sql = "";
         if(cartItem.getType().equals("+")) {
@@ -36,13 +42,6 @@ public class JdbcTemplateCartRepository implements CartRepository{
                  FROM cart
                  WHERE pid = ? AND size = ? AND id = ?
                 """;
-        System.out.println(sql);
-
-//                SELECT cid, sum(pid=? AND size=? and id=?) AS checkQty
-//                	FROM cart
-//                	GROUP BY cid, id
-//                	order by checkQty desc
-//                	limit 1
 
         Object[] params = {
                 cartItem.getPid(), cartItem.getSize(), cartItem.getId()
