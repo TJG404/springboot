@@ -23,7 +23,7 @@ public class JdbcTemplateCartRepository implements CartRepository{
                 select  m.id,
                 		p.pid,
                 		p.name,
-                		p.image,
+                		trim(p.image) image,
                         p.price,
                         c.size,
                         c.qty,
@@ -36,6 +36,14 @@ public class JdbcTemplateCartRepository implements CartRepository{
         System.out.println(sql);
         System.out.println(cartItem.getId());
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(CartListResponse.class), cartItem.getId());
+    }
+
+    @Override
+    public int deleteItem(CartItem cartItem) {
+        String sql = """
+                delete from cart where cid = ?
+                """;
+        return jdbcTemplate.update(sql, cartItem.getCid());
     }
 
     @Override

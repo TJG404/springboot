@@ -18,6 +18,11 @@ public class CartController {
         this.cartService = cartService;
     }
 
+    @PostMapping("/deleteItem")
+    public int deleteItem(@RequestBody CartItem cartItem) {
+        return cartService.deleteItem(cartItem);
+    }
+
     @PostMapping("/list")
     public List<CartListResponse> findList(@RequestBody CartItem cartItem) {
         return cartService.findList(cartItem);

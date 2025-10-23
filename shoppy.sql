@@ -309,8 +309,36 @@ select ifnull(sum(qty), 0) as sumQty from cart where id = 'hong';
 
 -- 장바구니 리스트 조회 : 상품(product) + 장바구니(cart) + 회원(member) 
 -- 어떤 회원이 어떤 상품을 몇개 넣었는가???
+select  m.id,
+		p.pid,
+		p.name,
+		p.image,
+        p.price,
+        c.size,
+        c.qty,
+        c.cid
+from member m, product p, cart c
+where m.id = c.id 
+	and p.pid = c.pid
+	and m.id = 'hong1234'; 
 
+select * from cart;   
 
+select  m.id,
+                p.pid,
+                p.name,
+                trim(p.image) image,
+        p.price,
+        c.size,
+        c.qty,
+        c.cid
+from member m, product p, cart c
+where m.id = c.id
+        and p.pid = c.pid
+        and m.id = 'test'; 
+        
+select * from cart;
+delete from cart where pid = 1;
 
 
 
