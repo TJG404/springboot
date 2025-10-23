@@ -1,9 +1,12 @@
 package com.springboot.shoppy_fullstack_app.service;
 
 import com.springboot.shoppy_fullstack_app.dto.CartItem;
+import com.springboot.shoppy_fullstack_app.dto.CartListResponse;
 import com.springboot.shoppy_fullstack_app.repository.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CartServiceImpl implements CartService{
@@ -12,6 +15,11 @@ public class CartServiceImpl implements CartService{
     @Autowired
     public CartServiceImpl(CartRepository cartRepository) {
         this.cartRepository = cartRepository;
+    }
+
+    @Override
+    public List<CartListResponse> findList(CartItem cartItem) {
+        return cartRepository.findList(cartItem);
     }
 
     @Override

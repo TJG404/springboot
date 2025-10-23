@@ -20,7 +20,7 @@ export function Cart() {
             { cartList && cartList.map(item => 
                 <div key={item.pid}>
                     <div className='cart-item'>
-                        <img src={item.image} alt="product img" />
+                        <img src={`/images/${item.image}`} alt="product img" />
                         <div className='cart-item-details'>
                             <p className='cart-item-title'>{item.name}</p>
                             <p className='cart-item-title'>{item.size}</p>
