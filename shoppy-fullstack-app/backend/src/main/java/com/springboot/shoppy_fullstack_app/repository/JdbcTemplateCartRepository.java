@@ -38,8 +38,6 @@ public class JdbcTemplateCartRepository implements CartRepository{
                     and m.id = ?              
                 """;
         Object[] params = { cartItem.getId(), cartItem.getId() };
-        System.out.println(sql);
-        System.out.println(cartItem.getId());
         return jdbcTemplate.query(sql,
                 new BeanPropertyRowMapper<>(CartListResponse.class), params);
     }
@@ -66,6 +64,7 @@ public class JdbcTemplateCartRepository implements CartRepository{
         } else {
             sql = " update cart set qty = qty - 1 where cid =? ";
         }
+        System.out.println("updateQty :: " + sql);
         return jdbcTemplate.update(sql, cartItem.getCid());
     }
 
@@ -85,7 +84,7 @@ public class JdbcTemplateCartRepository implements CartRepository{
         };
         CartItem resultCartItem = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(CartItem.class), params);
 
-        System.out.println("resultCartItem = " + resultCartItem);
+        System.out.println("checkQty :: resultCartItem = " + resultCartItem);
         return resultCartItem;
     }
 

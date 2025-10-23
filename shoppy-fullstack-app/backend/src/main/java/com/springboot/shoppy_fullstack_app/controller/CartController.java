@@ -35,6 +35,7 @@ public class CartController {
 
     @PostMapping("/updateQty")
     public int  updateQty(@RequestBody CartItem cartItem) {
+        System.out.println("updateQty :: " + cartItem);
         return cartService.updateQty(cartItem);
     }
 
