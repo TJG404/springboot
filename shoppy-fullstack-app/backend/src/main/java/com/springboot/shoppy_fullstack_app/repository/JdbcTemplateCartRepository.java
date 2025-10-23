@@ -21,21 +21,27 @@ public class JdbcTemplateCartRepository implements CartRepository{
     public List<CartListResponse> findList(CartItem cartItem) {
         String sql = """
                 select  m.id,
-                		p.pid,
-                		p.name,
-                		trim(p.image) image,
-                        p.price,
-                        c.size,
-                        c.qty,
-                        c.cid
-                from member m, product p, cart c
-                where m.id = c.id
-                	and p.pid = c.pid
-                	and m.id = ?                
+                        p.pid,
+                        p.name,
+                        p.image,
+                           p.price,
+                           c.size,
+                           c.qty,
+                           c.cid,
+                           (select sum(c.qty * p.price)
+                            from cart c
+                            inner join product p on c.pid = p.pid
+                            where c.id = ?) as totalPrice
+                   from member m, product p, cart c
+                   where m.id = c.id
+                    and p.pid = c.pid
+                    and m.id = ?              
                 """;
+        Object[] params = { cartItem.getId(), cartItem.getId() };
         System.out.println(sql);
         System.out.println(cartItem.getId());
-        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(CartListResponse.class), cartItem.getId());
+        return jdbcTemplate.query(sql,
+                new BeanPropertyRowMapper<>(CartListResponse.class), params);
     }
 
     @Override

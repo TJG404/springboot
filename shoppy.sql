@@ -305,7 +305,7 @@ select * from member;
 
 -- 장바구니 상품갯수 조회
 select count(qty) from cart where id = 'test';
-select ifnull(sum(qty), 0) as sumQty from cart where id = 'hong';  
+select ifnull(sum(qty), 0) as sumQty from cart where id = 'hong1234';  
 
 -- 장바구니 리스트 조회 : 상품(product) + 장바구니(cart) + 회원(member) 
 -- 어떤 회원이 어떤 상품을 몇개 넣었는가???
@@ -316,11 +316,15 @@ select  m.id,
         p.price,
         c.size,
         c.qty,
-        c.cid
+        c.cid,
+        (select sum(c.qty * p.price) as total_price
+			from cart c
+			inner join product p on c.pid = p.pid
+			where c.id = 'hong') as total
 from member m, product p, cart c
 where m.id = c.id 
 	and p.pid = c.pid
-	and m.id = 'hong1234'; 
+	and m.id = 'hong'; 
 
 select * from cart;   
 
@@ -335,10 +339,18 @@ select  m.id,
 from member m, product p, cart c
 where m.id = c.id
         and p.pid = c.pid
-        and m.id = 'test'; 
+        and m.id = 'hong'; 
         
 select * from cart;
 delete from cart where pid = 1;
+
+-- 장바구니 총 상품 가격 : qty(cart), price(product)
+select sum(c.qty * p.price) as total_price
+from cart c
+inner join product p on c.pid = p.pid
+where c.id = 'hong';
+
+
 
 
 

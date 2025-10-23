@@ -33,9 +33,9 @@ export const showCart = () => async (dispatch) => {
     const url = "/cart/list";
     const { userId } = JSON.parse(localStorage.getItem("loginInfo"));
     const jsonData = await axiosPost(url, {"id": userId});
-    console.log("jsonData -->", jsonData);
+    console.log("jsonData showcart-->", jsonData);
     dispatch(showCartItem({"items": jsonData}));
-//    dispatch(updateTotalPrice());
+    dispatch(updateTotalPrice({"totalPrice" : jsonData[0].totalPrice}));
 }
 
 export const updateCart = (cid, type) => async(dispatch) => {

@@ -30,9 +30,9 @@ export const cartSlice = createSlice({
     resetCartCount(state){
         state.cartCount = 0;
     },
-    updateTotalPrice (state) {
-        state.totalPrice 
-            = state.cartList.reduce((total, item) => total + (item.qty * item.price), 0);
+    updateTotalPrice (state, action) {
+    console.log("totalPrice ==> ", action.payload.totalPrice);
+        state.totalPrice = action.payload.totalPrice;
     },
     updateCartItem (state, action) {
         const { cid, type } = action.payload;
