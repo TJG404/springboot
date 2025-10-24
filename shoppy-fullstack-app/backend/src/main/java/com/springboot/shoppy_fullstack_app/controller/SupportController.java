@@ -3,9 +3,7 @@ package com.springboot.shoppy_fullstack_app.controller;
 import com.springboot.shoppy_fullstack_app.dto.Support;
 import com.springboot.shoppy_fullstack_app.service.SupportService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,8 +18,8 @@ public class SupportController {
         this.supportService = supportService;
     }
 
-    @GetMapping("/list")
-    public List<Support> list() {
-        return supportService.findAll();
+    @PostMapping("/list")
+    public List<Support> list(@RequestBody Support support) {
+        return supportService.findAll(support);
     }
 }

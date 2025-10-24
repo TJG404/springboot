@@ -18,6 +18,15 @@ public class JdbcTemplateSupportRepository implements SupportRepository{
     }
 
     @Override
+    public List<Support> findAll(Support support) {
+        String sql = """
+                select sid, title, stype, hits, rdate from support
+                    where stype = ?
+                """;
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Support.class), support.getStype());
+    }
+
+    @Override
     public List<Support> findAll() {
         String sql = """
                 select sid, title, stype, hits, rdate from support

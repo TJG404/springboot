@@ -1,8 +1,8 @@
-import { axiosGet } from '../../utils/dataFetch.js';
+import { axiosPost } from '../../utils/dataFetch.js';
 
-export const getList = async() => {
+export const getList = async(stype) => {
     const url = "/support/list";
-    const jsonData = await axiosGet(url);
-    console.log("getList :: jsonData => ", jsonData);
+    const data = {"stype": stype};
+    const jsonData = await axiosPost(url, data);
     return jsonData;
 }
