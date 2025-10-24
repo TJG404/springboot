@@ -310,8 +310,12 @@ select ifnull(sum(qty), 0) as sumQty from cart where id = 'hong1234';
 -- 장바구니 리스트 조회 : 상품(product) + 장바구니(cart) + 회원(member) 
 -- 어떤 회원이 어떤 상품을 몇개 넣었는가???
 select  m.id,
+		m.name,
+        m.phone,
+        m.email,
 		p.pid,
 		p.name,
+        p.info,
 		p.image,
         p.price,
         c.size,
@@ -327,28 +331,72 @@ where m.id = c.id
 	and m.id = 'hong'; 
 
 select * from cart;   
-
-select  m.id,
-                p.pid,
-                p.name,
-                trim(p.image) image,
-        p.price,
-        c.size,
-        c.qty,
-        c.cid
-from member m, product p, cart c
-where m.id = c.id
-        and p.pid = c.pid
-        and m.id = 'hong'; 
-        
-select * from cart;
-delete from cart where pid = 1;
+select * from member;
 
 -- 장바구니 총 상품 가격 : qty(cart), price(product)
 select sum(c.qty * p.price) as total_price
 from cart c
 inner join product p on c.pid = p.pid
 where c.id = 'hong';
+
+
+-- 장바구니 리스트 VIEW 생성
+show tables from information_schema;
+select * from information_schema.views where table_schema = 'shoppy';
+drop view view_cartlist;
+
+select * from view_cartlist where id ='hong1234';
+
+create view view_cartlist
+as
+select  m.id,
+		m.name as mname,
+		m.phone,
+		m.email,
+		p.pid,
+		p.name,
+		p.info,
+		p.image,
+	   p.price,
+	   c.size,
+	   c.qty,
+	   c.cid,
+       t.totalPrice
+   from member m, product p, cart c,
+          (select c.id, sum(c.qty * p.price) as totalPrice
+			from cart c
+			inner join product p on c.pid = p.pid
+			group by c.id) as t
+   where m.id = c.id
+	and p.pid = c.pid
+    and c.id = t.id
+; 
+
+select id, mname, phone, email, pid, name, info, image, price, size, qty, vc.cid, totalPrice 
+from view_cartlist vc,
+	(select sum(c.qty * p.price) as totalPrice
+		from cart c
+		inner join product p on c.pid = p.pid
+		where c.id = 'hong'
+		) as total
+where vc.cid = total.cid   
+;                   
+
+select * from view_cartlist;
+
+select c.id, sum(c.qty * p.price) as totalPrice
+		from cart c
+		inner join product p on c.pid = p.pid
+		group by c.id;
+
+
+
+
+
+
+
+
+
 
 
 
