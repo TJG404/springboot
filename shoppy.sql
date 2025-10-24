@@ -389,8 +389,43 @@ select c.id, sum(c.qty * p.price) as totalPrice
 		inner join product p on c.pid = p.pid
 		group by c.id;
 
+/*********************************************************************
+	고객센터 테이블 생성 : support
+**********************************************************************/
+create table support(
+	sid			int		auto_increment	primary key,    
+    title		varchar(100)	not null,
+    content		varchar(200),
+    stype		varchar(30)	 not null,
+    hits		int,
+    rdate		datetime
+);
 
+show tables;
 
+insert into support(title, stype, hits, rdate)
+select 
+	jt.title,
+    jt.stype,
+    jt.hits,
+    jt.rdate
+from
+	json_table(
+		cast(load_file('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/support_list.json') 
+				AS CHAR CHARACTER SET utf8mb4 ),
+		'$[*]' COLUMNS (
+			 title   	VARCHAR(100)  PATH '$.title',
+			 stype   	VARCHAR(30)  PATH '$.type',
+			 hits   	int PATH '$.hits',
+			 rdate		datetime	 PATH '$.rdate'
+		   )   
+    ) as jt ;
+
+select * from support;
+select distinct stype from support;
+desc support;
+
+select sid, title, stype, hits, rdate from support;
 
 
 
