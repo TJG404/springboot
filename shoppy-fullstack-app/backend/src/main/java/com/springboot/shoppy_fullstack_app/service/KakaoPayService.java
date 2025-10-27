@@ -127,8 +127,12 @@ public class KakaoPayService {
                                                     body,
                                                     KakaoApproveResponse.class
                                             );
-
+            System.out.println("Kakao Approve Success --> " + res);
+//            System.out.println("userId => " + res.getPartner_user_id());
+//            System.out.println("orderId => " + res.getPartner_order_id());
+//            System.out.println("status => " + res.getStatus());
             return res;
+
         } catch (Exception e) {
             System.err.println("Kakao Pay Approve 실패: " + e.getMessage());
             return null;
