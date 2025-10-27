@@ -13,7 +13,7 @@ export function CheckoutInfo() {
     /** payment */
   const handlePayment = async() => {
       const result = await getPayment();
-      console.log("result--->", result);
+//       console.log("result--->", result);
   }
 
 return (

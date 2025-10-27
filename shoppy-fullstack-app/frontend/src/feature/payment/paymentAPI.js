@@ -1,30 +1,22 @@
 import { axiosPost } from '../../utils/dataFetch.js';
 
-/**
-    결제
-*/
 export const getPayment = async() => {
-      const { userId } = JSON.parse(localStorage.getItem("loginInfo"));
-      const url = "/payment/kakao/ready";
-      console.log("userId --> ", userId);
-      const data = {
-          "orderId" : "1234",
-          "userId" : userId,
-          "itemName" : "테스트 상품",
-          "qty" : "10",
-          "totalAmount" : "1000", // 결제 금액 (KRW)
-      }
-      try {
-          const kakaoReadyResult = await axiosPost(url, data);
-          // window.location.href = response.data.next_redirect_pc_url;
-            console.log("getPayment :: response --> ", kakaoReadyResult.next_redirect_pc_url);
+    //userId, orderId, itemName, totalPrice ...
+    const { userId } = localStorage.getItem("loginInfo");
+    const url = "/payment/kakao/ready";  //카카오 QR 코드 호출
+    const data = {
+        "orderId": "1234",
+        "userId": userId,
+        "itemName": "테스트 상품",
+        "qty": "10",
+        "totalAmount": "1000"
+    }
 
-          if (kakaoReadyResult.tid) {
-          console.log("tid-->", kakaoReadyResult.tid);
-              // setQrUrl(response.data.next_redirect_mobile_url);
-              window.location.href = kakaoReadyResult.next_redirect_pc_url;
-          }
-      } catch (error) {
-          console.error("QR 결제 요청 실패:", error);
-      }
+    try {
+        const kakaoReadyResult = await axiosPost(url, data);
+        console.log("kakaoReadyResult => ", kakaoReadyResult);
+
+    } catch(error) {
+        console.log("error :: ", error);
+    }
 }
