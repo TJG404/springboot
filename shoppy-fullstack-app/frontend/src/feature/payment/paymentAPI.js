@@ -14,7 +14,7 @@ console.log(cartList);
         "totalAmount": cartList[0].totalPrice,
         "receiver": receiver,
         "paymentInfo": paymentInfo,
-        "cidList": JSON.stringify(cidList)
+        "cidList": cidList.join(",")
     }
 
     try {
