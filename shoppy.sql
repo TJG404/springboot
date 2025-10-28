@@ -592,6 +592,36 @@ create table order_detail (
 show tables;
 desc order_detail;
 
+select * from view_cartlist where id = "hong";
+desc view_cartList;
+
+select * from orders;
+select * from order_detail;
+desc orders;
+select * from order_detail;
+
+--
+-- INSERT INTO 
+-- 	order_detail(order_code, pid, pname, size, qty, pid_total_price, discount)
+SELECT 
+	'abc', pid, name AS pname, size, qty, totalPrice AS pid_total_price, 
+	0
+FROM view_cartlist
+WHERE cid IN (38,40,42);
+
+select * from view_cartlist;
+
+
+
+-- mysql은 수정, 삭제 시 update mode를 변경
+SET SQL_SAFE_UPDATES = 0;
+
+delete from orders;   
+      
+select * from orders;
+select * from order_detail;
+                
+
 
 
 
