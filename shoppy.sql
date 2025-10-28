@@ -542,18 +542,18 @@ use shoppy;
 select database();
 select * from member;
 desc member;
-drop table orders;
+-- drop table orders;
 create table orders (
   oid         		int 			auto_increment	primary key,
   order_code		varchar(40)		not null	unique,		-- 카카오 partner_order_id로 사용
-  member_id	      		varchar(50)    	not null,				-- 회원 아이디
+  member_id	      	varchar(50)    	not null,			-- 회원 아이디
   status        	enum('대기중','결제중','결제완료','취소','환불','만료')
 					not null default	'대기중',
   shipping_fee     	int				not null 	default 0,	-- 배송비
   discount_amount  	int				not null 	default 0,	-- 할인금액
   total_amount     	int				not null,  				-- 결제요청 금액(= 카카오 amount.total)
 
-  -- 수취/배송 스냅샷
+  -- 수취/배송 
   receiver_name    	varchar(50),
   receiver_phone   	varchar(50),
   zipcode          	varchar(20),
@@ -591,6 +591,7 @@ create table order_detail (
 
 show tables;
 desc order_detail;
+
 
 
 
