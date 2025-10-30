@@ -2,7 +2,12 @@ package com.springboot.shoppy_fullstack_app.controller;
 
 import com.springboot.shoppy_fullstack_app.dto.Member;
 import com.springboot.shoppy_fullstack_app.service.MemberService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/member")
@@ -30,10 +35,20 @@ public class MemberController {
         return result;
     }
 
-
     @PostMapping("/login")
-    public boolean login(@RequestBody Member member) {
-        return memberService.login(member);
+    public ResponseEntity<?> login(@RequestBody Member member,
+                                HttpServletRequest request) {
+        ResponseEntity<?> response = null;
+        boolean result = memberService.login(member);
+        if(result) {
+            HttpSession session = request.getSession(true);
+            session.setAttribute("sid", "hong");
+            response = ResponseEntity.ok(Map.of("login", true));
+        } else {
+            response = ResponseEntity.ok(Map.of("login", false));
+        }
+
+        return response;
     }
 
 }
