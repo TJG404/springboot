@@ -75,6 +75,16 @@ public class MemberController {
         // cookie.setDomain("localhost");  // 기존 쿠키가 domain=localhost였다면 지정
         response.addCookie(cookie);
 
+        // 4. CSRF 토큰을 재발행하여 출력
+        var xsrf = new Cookie("XSRF-TOKEN", null);
+        xsrf.setPath("/");               // ← 기존과 동일
+        xsrf.setMaxAge(0);               // ← 즉시 만료
+        xsrf.setHttpOnly(false);          // 개발 중에도 HttpOnly 유지 권장
+        // xsrf.setSecure(true);         // HTTPS에서만. 로컬 http면 주석
+        // xsrf.setDomain("localhost");  // 기존 쿠키가 domain=localhost였다면 지정
+        response.addCookie(xsrf);
+
+
         // 3. 응답: 세션이 있었든 없었든, 클라이언트에게 로그아웃 요청이 성공했음을 알림 (200 OK)
         //    JSESSIONID 쿠키 삭제는 session.invalidate() 시 서블릿 컨테이너가 처리합니다.
         return ResponseEntity.ok(Map.of("logout", true));
