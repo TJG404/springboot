@@ -25,6 +25,10 @@ public class MemberServiceImpl implements MemberService{
         this.jpaMemberRepository = jpaMemberRepository;
     }
 
+    /**
+     * Spring-Security를 이용하여 로그인 처리시 UserDetailsService 객체 사용하므로
+     * login 메소드는 호출 ❌
+     */
     @Override
     public boolean login(MemberDto member) {
         String encodePwd = memberRepository.login(member.getId());
@@ -50,7 +54,8 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public boolean idCheck(String id) {
         boolean result = true;
-        Long count = jpaMemberRepository.findById(id);
+        Long count = jpaMemberRepository.countById(id);
+        
         if(count == 0) result = false;
         return result;
     }

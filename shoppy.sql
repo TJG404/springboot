@@ -615,11 +615,30 @@ select * from view_cartlist;
 
 -- mysql은 수정, 삭제 시 update mode를 변경
 SET SQL_SAFE_UPDATES = 0;
-
-delete from orders;   
       
+--
+use shoppy;
+select database();
+show tables;      
 select * from orders;
 select * from order_detail;
+select * from view_cartlist;
+
+select ifnull(MAX(pwd), null) as pwd from member where id = 'test';
+
+select * from view_cartlist;
+
+select * from member;
+select * from product;
+desc member;
+desc product;
+
+-- findById('test')
+select id from member where id='test';
+
+
+
+
                 
 
 
