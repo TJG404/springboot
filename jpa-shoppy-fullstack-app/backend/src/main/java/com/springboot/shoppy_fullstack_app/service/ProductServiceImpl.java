@@ -2,10 +2,11 @@ package com.springboot.shoppy_fullstack_app.service;
 
 import com.springboot.shoppy_fullstack_app.dto.ProductDto;
 import com.springboot.shoppy_fullstack_app.dto.ProductDetailinfoDto;
-import com.springboot.shoppy_fullstack_app.dto.ProductQna;
-import com.springboot.shoppy_fullstack_app.dto.ProductReturn;
+import com.springboot.shoppy_fullstack_app.dto.ProductQnaDto;
+import com.springboot.shoppy_fullstack_app.dto.ProductReturnDto;
 import com.springboot.shoppy_fullstack_app.entity.Product;
 import com.springboot.shoppy_fullstack_app.entity.ProductDetailinfo;
+import com.springboot.shoppy_fullstack_app.entity.ProductQna;
 import com.springboot.shoppy_fullstack_app.jpa_repository.JpaProductRepository;
 import com.springboot.shoppy_fullstack_app.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,22 +18,23 @@ import java.util.List;
 @Service
 //@Transactional
 public class ProductServiceImpl implements ProductService {
-    private final ProductRepository productRepository;
     private final JpaProductRepository jpaProductRepository;
 
     @Autowired
-    public ProductServiceImpl(ProductRepository productRepository,
-                              JpaProductRepository jpaProductRepository) {
-        this.productRepository = productRepository;
+    public ProductServiceImpl(JpaProductRepository jpaProductRepository) {
         this.jpaProductRepository = jpaProductRepository;
     }
 
     @Override
-    public ProductReturn findReturn() { return productRepository.findReturn(); }
+    public ProductReturnDto findReturn() {
+        return new ProductReturnDto(jpaProductRepository.findReturn()); }
 
     @Override
-    public List<ProductQna> findQna(int pid) {
-        return productRepository.findQna(pid);
+    public List<ProductQnaDto> findQna(int pid) {
+        List<ProductQnaDto> list = new ArrayList<>();
+        List<ProductQna> entityList = jpaProductRepository.findQna(pid);
+        entityList.forEach(entity -> list.add(new ProductQnaDto(entity)));
+        return list;
     }
 
     @Override

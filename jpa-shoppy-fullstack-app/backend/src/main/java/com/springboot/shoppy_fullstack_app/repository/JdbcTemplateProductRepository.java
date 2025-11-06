@@ -2,8 +2,8 @@ package com.springboot.shoppy_fullstack_app.repository;
 
 import com.springboot.shoppy_fullstack_app.dto.ProductDto;
 import com.springboot.shoppy_fullstack_app.dto.ProductDetailinfoDto;
-import com.springboot.shoppy_fullstack_app.dto.ProductQna;
-import com.springboot.shoppy_fullstack_app.dto.ProductReturn;
+import com.springboot.shoppy_fullstack_app.dto.ProductQnaDto;
+import com.springboot.shoppy_fullstack_app.dto.ProductReturnDto;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -20,13 +20,13 @@ public class JdbcTemplateProductRepository  implements ProductRepository{
     }
 
     @Override
-    public ProductReturn findReturn() {
+    public ProductReturnDto findReturn() {
         String sql = "select rid, title, description, list from product_return";
-        return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(ProductReturn.class));
+        return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(ProductReturnDto.class));
     }
 
     @Override
-    public List<ProductQna> findQna(int pid) {
+    public List<ProductQnaDto> findQna(int pid) {
         String sql = """
                     select  qid, 
                             title, 
@@ -39,7 +39,7 @@ public class JdbcTemplateProductRepository  implements ProductRepository{
                     from product_qna 
                     where pid = ? 
                  """;
-        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(ProductQna.class), pid);
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(ProductQnaDto.class), pid);
     }
 
     @Override

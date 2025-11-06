@@ -2,8 +2,8 @@ package com.springboot.shoppy_fullstack_app.controller;
 
 import com.springboot.shoppy_fullstack_app.dto.ProductDto;
 import com.springboot.shoppy_fullstack_app.dto.ProductDetailinfoDto;
-import com.springboot.shoppy_fullstack_app.dto.ProductQna;
-import com.springboot.shoppy_fullstack_app.dto.ProductReturn;
+import com.springboot.shoppy_fullstack_app.dto.ProductQnaDto;
+import com.springboot.shoppy_fullstack_app.dto.ProductReturnDto;
 import com.springboot.shoppy_fullstack_app.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,12 +21,12 @@ public class ProductController {
     }
 
     @GetMapping("/return")
-    public ProductReturn getReturn() {
+    public ProductReturnDto getReturn() {
         return productService.findReturn();
     }
 
     @PostMapping("/qna")
-    public List<ProductQna> qna(@RequestBody ProductDto product) {
+    public List<ProductQnaDto> qna(@RequestBody ProductDto product) {
         return productService.findQna(product.getPid());
     }
 
