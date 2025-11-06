@@ -636,7 +636,14 @@ desc product;
 -- findById('test')
 select id from member where id='test';
 
+select pid, name, price, info, rate, trim(image) as image, imgList from product;
+desc product;
 
+select * from product;
+show tables;
+desc order_detail;
+
+ALTER TABLE product CHANGE img_list imgList JSON;
 
 
                 

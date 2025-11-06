@@ -1,6 +1,6 @@
 package com.springboot.shoppy_fullstack_app.controller;
 
-import com.springboot.shoppy_fullstack_app.dto.Product;
+import com.springboot.shoppy_fullstack_app.dto.ProductDto;
 import com.springboot.shoppy_fullstack_app.dto.ProductDetailinfo;
 import com.springboot.shoppy_fullstack_app.dto.ProductQna;
 import com.springboot.shoppy_fullstack_app.dto.ProductReturn;
@@ -26,22 +26,22 @@ public class ProductController {
     }
 
     @PostMapping("/qna")
-    public List<ProductQna> qna(@RequestBody Product product) {
+    public List<ProductQna> qna(@RequestBody ProductDto product) {
         return productService.findQna(product.getPid());
     }
 
     @PostMapping("/detailinfo")
-    public ProductDetailinfo detailinfo(@RequestBody Product product) {
+    public ProductDetailinfo detailinfo(@RequestBody ProductDto product) {
         return productService.findDetailinfo(product.getPid());
     }
 
     @PostMapping("/pid")
-    public Product pid(@RequestBody Product product) {
+    public ProductDto pid(@RequestBody ProductDto product) {
         return productService.findByPid(product.getPid());
     }
 
     @GetMapping("/all")
-    public List<Product> all() {
+    public List<ProductDto> all() {
         return productService.findAll();
     }
 }

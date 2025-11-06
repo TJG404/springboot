@@ -1,10 +1,9 @@
 package com.springboot.shoppy_fullstack_app.repository;
 
-import com.springboot.shoppy_fullstack_app.dto.Product;
+import com.springboot.shoppy_fullstack_app.dto.ProductDto;
 import com.springboot.shoppy_fullstack_app.dto.ProductDetailinfo;
 import com.springboot.shoppy_fullstack_app.dto.ProductQna;
 import com.springboot.shoppy_fullstack_app.dto.ProductReturn;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -52,16 +51,16 @@ public class JdbcTemplateProductRepository  implements ProductRepository{
     }
 
     @Override
-    public Product findByPid(int pid) {
+    public ProductDto findByPid(int pid) {
         String sql = "select pid, name, price, info, rate, trim(image) as image, imgList from product where pid = ?";
-        Product product = jdbcTemplate.queryForObject(sql,  new BeanPropertyRowMapper<>(Product.class),  pid);
+        ProductDto product = jdbcTemplate.queryForObject(sql,  new BeanPropertyRowMapper<>(ProductDto.class),  pid);
         return product;
     }
 
     @Override
-    public List<Product> findAll() {
+    public List<ProductDto> findAll() {
         String sql = "select pid, name, price, info, rate, trim(image) as image, imgList from product";
-        List<Product> list = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Product.class));
+        List<ProductDto> list = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(ProductDto.class));
 
         return list;
     }
