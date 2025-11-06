@@ -23,9 +23,9 @@ public class Product {
     @Column(name="rate")
     private double rate;
 
-    @Column(name="image", length = 100)
+    @Column(length = 100)
     private String image;
 
-    @Column(name="imgList", columnDefinition = "JSON")
+    @Column(columnDefinition = "JSON")
     private String imgList;
 }

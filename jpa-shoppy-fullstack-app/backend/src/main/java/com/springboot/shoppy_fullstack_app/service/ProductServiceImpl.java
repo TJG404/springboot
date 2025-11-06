@@ -1,10 +1,11 @@
 package com.springboot.shoppy_fullstack_app.service;
 
 import com.springboot.shoppy_fullstack_app.dto.ProductDto;
-import com.springboot.shoppy_fullstack_app.dto.ProductDetailinfo;
+import com.springboot.shoppy_fullstack_app.dto.ProductDetailinfoDto;
 import com.springboot.shoppy_fullstack_app.dto.ProductQna;
 import com.springboot.shoppy_fullstack_app.dto.ProductReturn;
 import com.springboot.shoppy_fullstack_app.entity.Product;
+import com.springboot.shoppy_fullstack_app.entity.ProductDetailinfo;
 import com.springboot.shoppy_fullstack_app.jpa_repository.JpaProductRepository;
 import com.springboot.shoppy_fullstack_app.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,13 +36,15 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDetailinfo findDetailinfo(int pid) {
-        return productRepository.findProductDetailinfo(pid);
+    public ProductDetailinfoDto findDetailinfo(int pid) {
+        ProductDetailinfo entity = jpaProductRepository.findProductDetailinfo(pid);
+        return new ProductDetailinfoDto(entity);
     }
 
     @Override
     public ProductDto findByPid(int pid) {
-        return productRepository.findByPid(pid);
+        Product entity = jpaProductRepository.findByPid(pid);
+        return new ProductDto(entity);
     }
 
     @Override

@@ -643,7 +643,10 @@ select * from product;
 show tables;
 desc order_detail;
 
-ALTER TABLE product CHANGE img_list imgList JSON;
+desc order_detail;
+desc product_detailinfo;
+desc product;
+ALTER TABLE product CHANGE imgList img_list JSON;
 
 
                 
