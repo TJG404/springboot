@@ -13,6 +13,20 @@ import java.util.List;
 
 @Repository
 public interface JpaCartRepository extends JpaRepository<CartItem, Integer> {
+    //장바구니 아이템 삭제
+    @Modifying
+    @Query("""
+            delete from CartItem c where c.cid = :cid
+            """)
+    int deleteItem(@Param("cid") int cid);
+
+    //🛒 장바구니 아이템 카운트 - Native Query 방식
+    @Query(value = """
+                select ifnull(sum(qty), 0) as sumQty from cart where id = :id
+            """, nativeQuery = true)
+    int countById(@Param("id") String id);
+
+
     //🛒 장바구니 전체 리스트 조회 - 엔티티 주소 전체를 리턴하는 경우 DTO에 생성자로 주입필수!!
     @Query("""
             select new com.springboot.shoppy_fullstack_app.dto.CartListResponseDto(
@@ -22,7 +36,7 @@ public interface JpaCartRepository extends JpaRepository<CartItem, Integer> {
                 from CartListView v
                 where v.id = :id
             """)
-    List<CartListResponseDto> findByUsername(@Param("id") String id);
+    List<CartListResponseDto> findList(@Param("id") String id);
 
     //🛒 장바구니 상품 수량 업데이트
     @Modifying

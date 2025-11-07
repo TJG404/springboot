@@ -439,7 +439,7 @@ select * from cart;
 **********************************************************************/
 drop view view_cartlist;
 select * from information_schema.views where table_name = 'view_cartlist';
-select * from view_cartlist;
+select * from view_cartlist where id='hong';
 
 create view view_cartlist
 as

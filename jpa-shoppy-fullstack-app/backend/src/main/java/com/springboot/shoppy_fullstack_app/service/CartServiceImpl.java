@@ -27,22 +27,20 @@ public class CartServiceImpl implements CartService{
 
     @Override
     public int deleteItem(CartItemDto cartItem) {
-//        delete from cart where cid = ?
-        return cartRepository.deleteItem(cartItem);
+        return jpaCartRepository.deleteItem(cartItem.getCid());
     }
-
 
     @Override
     public CartItemDto getCount(CartItemDto cartItem) {
-//        String sql = "select ifnull(sum(qty), 0) as sumQty from cart where id = ?";
-        return cartRepository.getCount(cartItem);
+        int count = jpaCartRepository.countById(cartItem.getId());
+        cartItem.setSumQty(count);
+        return cartItem;
     }
 
     @Override
     public List<CartListResponseDto> findList(CartItemDto cartItemDto) {
-        System.out.println("id-------------->> " + cartItemDto.getId());
         String id = cartItemDto.getId();
-        return jpaCartRepository.findByUsername(id);
+        return jpaCartRepository.findList(id);
     }
 
 
