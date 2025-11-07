@@ -22,7 +22,7 @@ public interface JpaCartRepository extends JpaRepository<CartItem, Integer> {
 
     //🛒 장바구니 아이템 카운트 - Native Query 방식
     @Query(value = """
-                select ifnull(sum(qty), 0) as sumQty from cart where id = :id
+              select ifnull(sum(qty), 0) as sumQty from cart  where id = :id
             """, nativeQuery = true)
     int countById(@Param("id") String id);
 
