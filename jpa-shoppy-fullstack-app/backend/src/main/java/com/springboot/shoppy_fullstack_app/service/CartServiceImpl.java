@@ -2,7 +2,7 @@ package com.springboot.shoppy_fullstack_app.service;
 
 import com.springboot.shoppy_fullstack_app.dto.CartCheckQtyDto;
 import com.springboot.shoppy_fullstack_app.dto.CartItemDto;
-import com.springboot.shoppy_fullstack_app.dto.CartListResponse;
+import com.springboot.shoppy_fullstack_app.dto.CartListResponseDto;
 import com.springboot.shoppy_fullstack_app.entity.CartItem;
 import com.springboot.shoppy_fullstack_app.jpa_repository.JpaCartRepository;
 import com.springboot.shoppy_fullstack_app.repository.CartRepository;
@@ -27,18 +27,24 @@ public class CartServiceImpl implements CartService{
 
     @Override
     public int deleteItem(CartItemDto cartItem) {
+//        delete from cart where cid = ?
         return cartRepository.deleteItem(cartItem);
     }
 
-    @Override
-    public List<CartListResponse> findList(CartItemDto cartItem) {
-        return cartRepository.findList(cartItem);
-    }
 
     @Override
     public CartItemDto getCount(CartItemDto cartItem) {
+//        String sql = "select ifnull(sum(qty), 0) as sumQty from cart where id = ?";
         return cartRepository.getCount(cartItem);
     }
+
+    @Override
+    public List<CartListResponseDto> findList(CartItemDto cartItemDto) {
+        System.out.println("id-------------->> " + cartItemDto.getId());
+        String id = cartItemDto.getId();
+        return jpaCartRepository.findByUsername(id);
+    }
+
 
     @Override
     public int updateQty(CartItemDto cartItemDto) {

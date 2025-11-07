@@ -1,7 +1,7 @@
 package com.springboot.shoppy_fullstack_app.controller;
 
 import com.springboot.shoppy_fullstack_app.dto.CartItemDto;
-import com.springboot.shoppy_fullstack_app.dto.CartListResponse;
+import com.springboot.shoppy_fullstack_app.dto.CartListResponseDto;
 import com.springboot.shoppy_fullstack_app.service.CartService;
 import com.springboot.shoppy_fullstack_app.service.KakaoPayService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,21 +31,8 @@ public class CartController {
      *  로그인 성공 체크 후 장바구니 리스트 조회
      */
     @PostMapping("/list")
-    public List<CartListResponse> findList(@RequestBody CartItemDto cartItem,
-                                      HttpServletRequest request) {
-//        HttpSession session = request.getSession(false); //기존 생성 가져오기
-//        String sid = (String)session.getAttribute("sid");
-//        String ssid = session.getId();
-//        ResponseEntity<?> response = null;
-//
-//        if(ssid != null && sid != null) {  //로그인 회원
-//            System.out.println("ssid :: " + ssid + "sid ::" + sid);
-//            List<CartListResponse> list = cartService.findList(cartItem);
-//            response = ResponseEntity.ok(list);
-//        } else {
-//            response = ResponseEntity.ok(Map.of("result", false));
-//        }
-
+    public List<CartListResponseDto> findList(@RequestBody CartItemDto cartItem,
+                                              HttpServletRequest request) {
         return cartService.findList(cartItem);
     }
 

@@ -1,7 +1,7 @@
 package com.springboot.shoppy_fullstack_app.repository;
 
 import com.springboot.shoppy_fullstack_app.dto.CartItemDto;
-import com.springboot.shoppy_fullstack_app.dto.CartListResponse;
+import com.springboot.shoppy_fullstack_app.dto.CartListResponseDto;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -17,16 +17,12 @@ public class JdbcTemplateCartRepository implements CartRepository{
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
+
+
     @Override
-    public List<CartListResponse> findList(CartItemDto cartItem) {
-        String sql = """
-                select id, mname, phone, email, pid, name, info, image, price, size, qty, cid, totalPrice\s
-                from view_cartlist
-                where id = ?
-                """;
-        Object[] params = { cartItem.getId() };
-        return jdbcTemplate.query(sql,
-                new BeanPropertyRowMapper<>(CartListResponse.class), params);
+    public CartItemDto getCount(CartItemDto cartItem) {
+        String sql = "select ifnull(sum(qty), 0) as sumQty from cart where id = ?";
+        return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(CartItemDto.class), cartItem.getId());
     }
 
     @Override
@@ -38,10 +34,17 @@ public class JdbcTemplateCartRepository implements CartRepository{
     }
 
     @Override
-    public CartItemDto getCount(CartItemDto cartItem) {
-        String sql = "select ifnull(sum(qty), 0) as sumQty from cart where id = ?";
-        return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(CartItemDto.class), cartItem.getId());
+    public List<CartListResponseDto> findList(CartItemDto cartItem) {
+        String sql = """
+                select id, mname, phone, email, pid, name, info, image, price, size, qty, cid, totalPrice\s
+                from view_cartlist
+                where id = ?
+                """;
+        Object[] params = { cartItem.getId() };
+        return jdbcTemplate.query(sql,
+                new BeanPropertyRowMapper<>(CartListResponseDto.class), params);
     }
+
 
     @Override
     public int updateQty(CartItemDto cartItem) {
