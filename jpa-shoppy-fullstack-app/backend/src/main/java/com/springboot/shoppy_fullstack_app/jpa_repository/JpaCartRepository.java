@@ -13,11 +13,6 @@ import java.util.List;
 
 @Repository
 public interface JpaCartRepository extends JpaRepository<CartItem, Integer> {
-    /*** 👌 Step: 3 주문/결제 - 장바구니 삭제    */
-    @Modifying
-    @Query("delete from CartItem c where c.cid in (:cidList)")
-    int deleteCartItem(@Param("cidList") List<Integer> cidList);
-
     //장바구니 아이템 삭제
     @Modifying
     @Query("""
@@ -25,7 +20,7 @@ public interface JpaCartRepository extends JpaRepository<CartItem, Integer> {
             """)
     int deleteItem(@Param("cid") int cid);
 
-    //🛒 장바구니 아이템 카운트 - Ultimate 버전에서는 JPQL 방식으로 작성하세요.
+    //🛒 장바구니 아이템 카운트 - Native Query 방식
     @Query(value = """
               select ifnull(sum(qty), 0) as sumQty from cart  where id = :id
             """, nativeQuery = true)
