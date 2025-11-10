@@ -439,7 +439,9 @@ select * from cart;
 **********************************************************************/
 drop view view_cartlist;
 select * from information_schema.views where table_name = 'view_cartlist';
-select * from view_cartlist where id='hong';
+select * from view_cartlist where id='test';
+
+select qty from cart where id='test99';
 
 create view view_cartlist
 as
@@ -665,7 +667,42 @@ desc view_cartlist;
 select * from information_schema.views
 	where table_name='view_cartlist';
     
-    
+--
+show tables;
+select * from orders;
+select * from order_detail;
+desc orders;
+select * from view_cartlist where id='hong';
+
+delete from orders;
+delete from order_detail;
+delete from cart;
+
+select * from orders;
+select * from order_detail;
+select * from cart;
+
+select * from orders o, order_detail od, product p
+where o.order_code = od.order_code and od.pid = p.pid;
+
+
+desc order_detail;
+
+desc orders;
+desc order_detail;
+
+select * from orders;
+select * from order_detail;
+select * from cart;
+select * from view_cartlist;
+
+-- mysql은 수정, 삭제 시 update mode를 변경
+SET SQL_SAFE_UPDATES = 0;  
+
+delete from orders;
+delete from cart;
+
+
 
 
                 
