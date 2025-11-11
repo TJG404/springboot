@@ -8,7 +8,6 @@ import Pagination from 'rc-pagination';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'rc-pagination/assets/index.css';
 
-
 export function Support() {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalCount, setTotalCount] = useState(0);
@@ -18,38 +17,53 @@ export function Support() {
     const [category, setCategory] = useState([]);
     const [list, setList] = useState([]);
     const [stype, setStype] = useState('all');
+    const [searchData, setSearchData] = useState({});
+    const [type, setType] = useState("menu");
 
     useEffect(()=>{
         const fetch = async() => {
-            const data = {
-                "stype": stype,
-                "currentPage": currentPage,
-                "pageSize": pageSize
-            }
             const jsonData = await axiosData("/data/support.json"); //카테고리 가져오기
-            const pageList = await getList(data);
             setMenus(jsonData.menus);
             setCategory(jsonData.category);
-            setList(pageList.list);
-            setTotalCount(pageList.totalCount);
+
+            if(type === 'menu') executeMenu();
+            else if(type === 'search') executeSearch();
         }
         fetch();
-    }, [stype, currentPage]);
+    }, [currentPage, stype, searchData]);
+
+    const executeMenu = async() => {
+        const data = { "stype": stype,
+                      "currentPage": currentPage,
+                      "pageSize": pageSize}
+            const pageList = await getList(data);
+            setList(pageList.list);
+            setTotalCount(pageList.totalCount);
+    }
+
+    const executeSearch = async() => {
+        const data = {
+                    "type": searchData.type,
+                    "keyword": searchData.keyword,
+                    "currentPage": currentPage,
+                    "pageSize": pageSize
+                }
+            const pageList = await getSearchList(data);
+            setList(pageList.list);
+            setTotalCount(pageList.totalCount);
+    }
 
     const filterList = async(stype) => {
         setStype(stype);
         setCurrentPage(1);
+        setType("menu");
+        executeMenu();
     }
 
     const handleSearch = async (searchData) => {
-        const data = {
-                        "type": searchData.type,
-                        "keyword": searchData.keyword,
-                        "currentPage": currentPage,
-                        "pageSize": pageSize
-                    }
-        const list = await getSearchList(data);
-        setList(list);
+         setType("search");
+         setSearchData(searchData);
+         setCurrentPage(1);
     }
 
     return (  

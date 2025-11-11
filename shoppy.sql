@@ -618,6 +618,9 @@ WHERE cid IN (38,40,42);
 select * from view_cartlist;
 
 
+desc support;
+select * from support;
+update support set content = "test" where sid in (1, 5, 18);
 
 -- mysql은 수정, 삭제 시 update mode를 변경
 SET SQL_SAFE_UPDATES = 0;     
