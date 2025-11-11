@@ -621,6 +621,8 @@ select * from view_cartlist;
 desc support;
 select * from support;
 update support set content = "test" where sid in (1, 5, 18);
+select * from support where rdate like '%2024%';
+select * from support where content like '%test%';
 
 -- mysql은 수정, 삭제 시 update mode를 변경
 SET SQL_SAFE_UPDATES = 0;     
@@ -702,8 +704,14 @@ select * from view_cartlist;
 -- mysql은 수정, 삭제 시 update mode를 변경
 SET SQL_SAFE_UPDATES = 0;  
 
-delete from orders;
-delete from cart;
+-- delete from orders;
+-- delete from cart;
+
+select * from cart;
+select * from member;
+alter table member add role varchar(10);
+update member set role = 'USER';
+
 
 
 

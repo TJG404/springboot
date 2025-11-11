@@ -64,7 +64,9 @@ public class MemberController {
             Authentication authenticationResponse =
                     this.authenticationManager.authenticate(authenticationRequest);
 
-            System.out.println("인증 성공: " + authenticationResponse.getPrincipal());
+//            System.out.println("인증 성공: " + authenticationResponse.getPrincipal());
+//            System.out.println("============= getCredentials ========= :: " + authenticationResponse.getCredentials());
+//            System.out.println("============= getAuthorities ========= :: " + authenticationResponse.getAuthorities());
 
             //3. 컨텍스트에 보관
             var context = SecurityContextHolder.createEmptyContext();

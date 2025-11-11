@@ -34,6 +34,7 @@ public class Member {
     @Column(name="mdate")
     private LocalDate mdate;
 
+
     //✨ 생성자를 반드시 정의!!!
     public Member() {}
     public Member(MemberDto memberDto) {
