@@ -28,6 +28,15 @@ public class SupportServiceImpl implements SupportService{
     }
 
     @Override
+    public PageResponseDto<SupportDto> findSearchAll(SupportDto support) {
+        System.out.println("type ---->> " + support.getType());
+        System.out.println("keyword ---->> " + support.getKeyword());
+
+        return null;
+    }
+
+
+    @Override
     public PageResponseDto<SupportDto> findAll(SupportDto support) {
         //✨Page 객체의 인덱스 시작점이 currentPage 이므로, 0번지 인덱스로 초기화!!!!
         int currentPage = support.getCurrentPage()-1;  
