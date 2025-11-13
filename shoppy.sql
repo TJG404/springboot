@@ -701,16 +701,12 @@ select * from order_detail;
 select * from cart;
 select * from view_cartlist;
 
+use shoppy;
+select database();
+
 -- mysql은 수정, 삭제 시 update mode를 변경
-SET SQL_SAFE_UPDATES = 0;  
+set sql_safe_updates = 0;
 
--- delete from orders;
--- delete from cart;
-
-select * from cart;
-select * from member;
-alter table member add role varchar(10);
-update member set role = 'USER';
 
 
 
