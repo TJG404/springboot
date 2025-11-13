@@ -35,7 +35,7 @@ export const getLogin = (formData, param) => async(dispatch) => {
     if(validateFormCheck(param)) {
         const url = "/member/login";
         const result = await axiosPost(url, formData);
-//        console.log("result :: ", result, result.role[0].authority);
+        console.log("result :: ", result);
         if(result.login) {
             await refreshCsrfToken();
             dispatch(login({"userId":formData.id, "role":result.role[0].authority}));

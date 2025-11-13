@@ -33,13 +33,8 @@ export const axiosGet = async (url) => {
  */
 export const axiosPost = async (url, formData) => {
     const response = await axios.post(url, formData, { "Content-Type": "application/json" });
-    /* const response = await axios({
-        method: "POST",
-        url: url,
-        headers: { "Content-Type": "application/json" },
-        data: formData
-    }); */
-    return response.data;
+    console.log("response ==>> ", response);
+     return response.data;
 }
 
 /**
