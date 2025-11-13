@@ -34,6 +34,9 @@ public class Member {
     @Column(name="mdate")
     private LocalDate mdate;
 
+    @Column(name="role")
+    private  String role;
+
 
     //✨ 생성자를 반드시 정의!!!
     public Member() {}
@@ -44,6 +47,7 @@ public class Member {
         this.phone = memberDto.getPhone();
         this.email = memberDto.getEmail();
         this.mdate = LocalDate.now();
+        this.role = memberDto.getRole();
     }
 
 }

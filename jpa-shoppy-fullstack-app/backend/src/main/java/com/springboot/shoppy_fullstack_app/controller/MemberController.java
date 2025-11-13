@@ -64,9 +64,8 @@ public class MemberController {
             Authentication authenticationResponse =
                     this.authenticationManager.authenticate(authenticationRequest);
 
-//            System.out.println("인증 성공: " + authenticationResponse.getPrincipal());
-//            System.out.println("============= getCredentials ========= :: " + authenticationResponse.getCredentials());
-//            System.out.println("============= getAuthorities ========= :: " + authenticationResponse.getAuthorities());
+            System.out.println("인증 성공: " + authenticationResponse.getPrincipal());
+            System.out.println("=========>" + authenticationResponse.getAuthorities());
 
             //3. 컨텍스트에 보관
             var context = SecurityContextHolder.createEmptyContext();
@@ -86,7 +85,9 @@ public class MemberController {
             response.addCookie(xsrf);
 
             return ResponseEntity.ok(Map.of("login", true,
-                    "userId", member.getId()));
+                    "userId", member.getId(),
+                    "role", authenticationResponse.getAuthorities()
+                    ));
 
         }catch(Exception e) {
             //로그인 실패

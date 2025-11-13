@@ -703,9 +703,18 @@ select * from view_cartlist;
 
 use shoppy;
 select database();
-
 -- mysql은 수정, 삭제 시 update mode를 변경
 set sql_safe_updates = 0;
+select * from member;
+
+-- role 컬럼 추가
+alter table member add role varchar(10);
+select * from member;
+update member set role = 'USER';
+
+
+
+
 
 
 
